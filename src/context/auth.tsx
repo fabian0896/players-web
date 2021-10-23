@@ -34,6 +34,15 @@ export const AuthProvider: React.FC = ({ children }) => {
       console.log(data);
       setUser(data.user);
       setToken(data.token);
+      AuthService.setRefreshTimeout(data, (error: any, refreshData: any) => {
+        if (error) {
+          setUser(null);
+          setToken(null);
+          return;
+        }
+        setUser(refreshData.user);
+        setToken(refreshData.token);
+      });
     } catch (error) {
       setUser(null);
       setToken(null);
@@ -58,6 +67,15 @@ export const AuthProvider: React.FC = ({ children }) => {
         const data = await AuthService.refresh();
         setToken(data.token);
         setUser(data.user);
+        AuthService.setRefreshTimeout(data, (error: any, refreshData: any) => {
+          if (error) {
+            setUser(null);
+            setToken(null);
+            return;
+          }
+          setUser(refreshData.user);
+          setToken(refreshData.token);
+        });
       } catch (error) {
         setUser(null);
         setToken(null);
