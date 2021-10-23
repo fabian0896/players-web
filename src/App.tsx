@@ -1,5 +1,4 @@
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-
 import {
   Home,
   Players,
@@ -7,15 +6,25 @@ import {
   Signup,
 } from './pages';
 
+import { Layout, PrivateRoute } from './components';
+
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Switch>
-          <Route path="/" exact component={Home} />
+          <PrivateRoute path="/" exact>
+            <Layout>
+              <Home />
+            </Layout>
+          </PrivateRoute>
+          <PrivateRoute path="/players">
+            <Layout>
+              <Players />
+            </Layout>
+          </PrivateRoute>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/players" component={Players} />
           <Redirect to="/" />
         </Switch>
       </BrowserRouter>

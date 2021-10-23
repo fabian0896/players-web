@@ -1,16 +1,26 @@
 import React, { useState } from "react";
 import { LoginForm } from '../../components';
-import axios from "axios";
+import { LoginCredentials } from "../../react-app-env";
+import { useAuth} from '../../context/auth';
+import { useHistory, useLocation } from "react-router-dom";
+import { Location } from 'history';
+
+type LocationState = {
+  from: Location
+}
 
 const Login: React.FC = () => {
   const [error, setError] = useState(false);
-  const handleSubmit = async (values: { email: string, password: string }) => {
-    setError(true);
+  const history = useHistory();
+  const location = useLocation<LocationState>();
+  const { login } = useAuth();
+
+  const handleSubmit = async (values: LoginCredentials) => {
+    setError(false);
     try {
-      const { data } = await axios.post('http://localhost:4000/api/v1/auth/login', values, {
-        withCredentials: true,
-      });
-      console.log(data);
+      await login(values);
+      const { from } = location.state || { from: { pathname: '/' } };
+      history.replace(from);
     } catch (error) {
       setError(true);
     }

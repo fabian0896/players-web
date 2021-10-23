@@ -4,14 +4,10 @@ import { FaUserAlt, FaLock } from 'react-icons/fa'
 import { Link } from "react-router-dom";
 import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
-
-type Values = {
-  email: string,
-  password: string,
-}
+import { LoginCredentials } from "../../react-app-env";
 
 interface LoginFormProps {
-  onSubmit: (values: Values, actions?: FormikHelpers<Values>) => Promise<void>,
+  onSubmit: (values: LoginCredentials, actions?: FormikHelpers<LoginCredentials>) => Promise<void>,
   error?: boolean
 }
 
