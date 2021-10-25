@@ -19,3 +19,14 @@ export interface LoginResponse {
   expireIn: number;
   user: User;
 }
+
+export type PlayerCreate = {
+  firstName: string,
+  lastName: string,
+  birthday: Date,
+  eps: string,
+  email: string,
+  picture?: string,
+  cedula: string,
+  phone: string,
+}
