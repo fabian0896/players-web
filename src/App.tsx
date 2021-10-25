@@ -4,25 +4,19 @@ import {
   Players,
   Login,
   Signup,
+  NewPlayer
 } from './pages';
 
-import { Layout, PrivateRoute } from './components';
+import { PrivateRoute } from './components';
 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Switch>
-          <PrivateRoute path="/" exact>
-            <Layout>
-              <Home />
-            </Layout>
-          </PrivateRoute>
-          <PrivateRoute path="/players">
-            <Layout>
-              <Players />
-            </Layout>
-          </PrivateRoute>
+          <PrivateRoute path="/" exact component={Home} />
+          <PrivateRoute path="/players/new" component={NewPlayer} />
+          <PrivateRoute path="/players" component={Players} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Redirect to="/" />

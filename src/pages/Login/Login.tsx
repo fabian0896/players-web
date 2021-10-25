@@ -27,7 +27,7 @@ const Login: React.FC = () => {
   }
 
   return(
-    <div className="h-screen w-full flex justify-center items-center bg-yellow-50">
+    <div className="h-screen w-full flex justify-center items-center bg-gray-200">
       <LoginForm error={error} onSubmit={handleSubmit}/>
     </div>
   );

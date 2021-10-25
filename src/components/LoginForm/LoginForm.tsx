@@ -66,7 +66,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
             icon={FaLock} 
           />
           <div>
-            <Button 
+            <Button
+              full
               disabled={formik.isSubmitting || !formik.isValid} 
               type="submit" 
               className="mb-5">
