@@ -6,4 +6,4 @@ export { default as PrivateRoute } from './PrivateRoute';
 export { default as Layout } from './Layout';
 export { default as PlayerForm } from './PlayerForm';
 export { default as Modal } from './Modal';
-
+export { default as DatePicker } from './DatePicker';

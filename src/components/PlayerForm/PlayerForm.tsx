@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { Input, Button, Modal } from '..';
+import { Input, Button, Modal, DatePicker } from '..';
 import NumberFormat from 'react-number-format';
-import { FcAddImage } from 'react-icons/fc';
 import { useFormik } from 'formik';
 import { PlayerCreate } from '../../react-app-env';
+import WebcamCapture from '../WebcamCapture/WebcamCapture';
+
+import Picture  from './Picture';
 
 const PlayerForm: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
+  const [picture, setPicture] = useState<string | null>(null);
+
   const formik = useFormik<Partial<PlayerCreate>>({
     initialValues: {
       firstName: '',
@@ -23,20 +27,29 @@ const PlayerForm: React.FC = () => {
     }
   });
 
+  const handleCloseModal = () => {
+    setOpen(false);
+  }
+
+  const handleCapture = (imageSrc: string | null) => {
+    setPicture(imageSrc);
+    setOpen(false);
+  }
   return (
     <>
-      <Modal open={open} onClose={() => setOpen(false)} />
+      <Modal 
+        title="Toma una foto" 
+        open={open} 
+        onClose={handleCloseModal}
+      >
+        <WebcamCapture
+          onCancel={handleCloseModal}
+          onCapture={handleCapture}/>
+      </Modal>
       <div className="max-w-3xl mx-auto">
         <form onSubmit={formik.handleSubmit}>
           <div className="space-y-6">
-            <div className="flex justify-center pb-6">
-              <div 
-                onClick={() => setOpen(true)} 
-                className="w-52 h-52 shadow bg-gray-200 mr-6 rounded-lg flex items-center justify-center border-gray-500 border-2 border-dashed"
-              >
-                <FcAddImage size={50} />
-              </div>
-            </div>
+            <Picture picture={picture} onClick={() => setOpen(true)} />
             <div className="grid grid-cols-2 gap-6">
               <Input
                 value={formik.values.firstName}
@@ -67,13 +80,9 @@ const PlayerForm: React.FC = () => {
                 placeholder="" 
                 label="Cedula" 
               />
-              <Input
-                onChange={({ target }) => formik.setFieldValue('birthday', new Date(target.value))}
-                onBlur={formik.handleBlur}
-                name="birthday" 
-                type="date" 
-                placeholder="" 
+              <DatePicker 
                 label="Fecha de nacimiento" 
+                onChange={(date) => console.log(date)} 
               />
             </div>
             <Input
