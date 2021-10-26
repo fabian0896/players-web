@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { FaHome, FaBasketballBall, FaUsers, FaSignOutAlt } from 'react-icons/fa';
 import { User } from "../../react-app-env";
 
+import { startCase } from '../../utils';
+
 interface SideBarProps {
   onLogout: () => Promise<void>
   user: User | null
@@ -22,7 +24,7 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout, user }) => {
         <li className="text-red-800">
           <NavLink
             exact
-            activeClassName="bg-red-500 rounded text-gray-100"
+            activeClassName="bg-red-500 rounded text-white"
             className="p-2 px-5 flex items-center font-semibold space-x-4 text-xl transition"
             to="/">
               <FaHome className="text-2xl" />
@@ -31,7 +33,7 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout, user }) => {
         </li>
         <li className="text-red-800">
           <NavLink
-            activeClassName="bg-red-500 rounded text-gray-100"
+            activeClassName="bg-red-500 rounded text-white"
             className="p-2 px-5 flex items-center font-semibold space-x-4 text-xl transition"
             to="/players">
               <FaBasketballBall className="text-2xl" />
@@ -40,7 +42,7 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout, user }) => {
         </li>
         <li className="text-red-800">
           <NavLink
-            activeClassName="bg-red-500 rounded text-gray-100"
+            activeClassName="bg-red-500 rounded text-white"
             className="p-2 px-5 flex items-center font-semibold space-x-4 text-xl transition"
             to="/users">
               <FaUsers className="text-2xl" />
@@ -56,7 +58,7 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout, user }) => {
           <img className="w-16 rounded shadow" src={user?.avatar} alt={user?.name} />
         </div>
         <div className="flex-1">
-          <p className="font-semibold text-gray-800">{user?.name}</p>
+          <p className="font-semibold text-gray-800">{startCase(user?.name)}</p>
           <p className="text-sm text-gray-600">{user?.email}</p>
           <p className="text-sm font-semibold text-gray-600">{user?.role}</p>
         </div>

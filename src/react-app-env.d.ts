@@ -29,4 +29,29 @@ export type PlayerCreate = {
   picture?: string,
   cedula: string,
   phone: string,
+  picture?: string,
+}
+
+export interface Images {
+  id?: number;
+  small: string;
+  medium: string;
+  large: string;
+  playerId?: number;
+}
+
+export interface PLayerResponse {
+  id: number;
+  firstName: string;
+  lastName: string;
+  cedula: string;
+  birthday: Date;
+  phone: string;
+  eps: string;
+  email: string;
+  active: boolean;
+  creatorId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  images?: Images | null;
 }

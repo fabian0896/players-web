@@ -3,7 +3,7 @@ import { BiErrorCircle } from 'react-icons/bi';
 import clsx from 'clsx'
 
 interface MessageProps extends HTMLAttributes<HTMLDivElement> {
-  children: string,
+  children: string | null,
 }
 
 const Message: React.FC<MessageProps> = ({ children, className }) => {

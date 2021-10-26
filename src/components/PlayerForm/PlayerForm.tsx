@@ -1,17 +1,42 @@
 import React, { useState } from 'react';
-import { Input, Button, Modal, DatePicker } from '..';
+import { 
+  Input, 
+  Button, 
+  Modal, 
+  DatePicker, 
+  Message, 
+  LoadingOverlay 
+} from '..';
 import NumberFormat from 'react-number-format';
-import { useFormik } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
+import * as Yup from 'yup';
+import { Transition } from '@headlessui/react';
+
 import { PlayerCreate } from '../../react-app-env';
 import WebcamCapture from '../WebcamCapture/WebcamCapture';
-
 import Picture  from './Picture';
 
-const PlayerForm: React.FC = () => {
+interface PlayerFormProps {
+  onSubmit: (values: PlayerCreate, picture: string | null, actions:FormikHelpers<PlayerCreate>) => Promise<void>;
+};
+
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string().required(),
+  lastName: Yup.string().required(),
+  cedula: Yup.string().required(),
+  email: Yup.string().email().required(),
+  eps: Yup.string().required(),
+  phone: Yup.string().required(),
+  birthday: Yup.date().required(),
+});
+
+const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit }) => {
+  const [error, setError] = useState<null | string>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [picture, setPicture] = useState<string | null>(null);
 
-  const formik = useFormik<Partial<PlayerCreate>>({
+  const formik = useFormik<PlayerCreate>({
     initialValues: {
       firstName: '',
       lastName: '',
@@ -19,11 +44,21 @@ const PlayerForm: React.FC = () => {
       email: '',
       eps: '',
       phone: '',
-      birthday: undefined,
+      birthday: new Date(),
     },
+    validationSchema,
     async onSubmit(values, actions) {
-      console.log(values);
-      actions.resetForm();
+      setLoading(true);
+      try {
+        await onSubmit(values, picture, actions);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('Algo salio mal 😟 por favor intenta nuevamente');
+        }
+        setLoading(false);
+      }
     }
   });
 
@@ -35,8 +70,13 @@ const PlayerForm: React.FC = () => {
     setPicture(imageSrc);
     setOpen(false);
   }
+
   return (
     <>
+      <LoadingOverlay
+        loading={loading}
+        message="Guardando información en la base de datos..." 
+      />
       <Modal 
         title="Toma una foto" 
         open={open} 
@@ -46,12 +86,13 @@ const PlayerForm: React.FC = () => {
           onCancel={handleCloseModal}
           onCapture={handleCapture}/>
       </Modal>
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto p-10 rounded-lg bg-white">
         <form onSubmit={formik.handleSubmit}>
           <div className="space-y-6">
             <Picture picture={picture} onClick={() => setOpen(true)} />
             <div className="grid grid-cols-2 gap-6">
               <Input
+                error={formik.touched.firstName && formik.errors.firstName}
                 value={formik.values.firstName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -61,6 +102,7 @@ const PlayerForm: React.FC = () => {
                 label="Nombres" 
               />
               <Input
+                error={formik.touched.lastName && formik.errors.lastName}
                 value={formik.values.lastName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -72,6 +114,7 @@ const PlayerForm: React.FC = () => {
             </div>
             <div className="grid grid-cols-2 gap-6">
               <Input
+                error={formik.touched.cedula && formik.errors.cedula}
                 value={formik.values.cedula}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -80,12 +123,13 @@ const PlayerForm: React.FC = () => {
                 placeholder="" 
                 label="Cedula" 
               />
-              <DatePicker 
+              <DatePicker
                 label="Fecha de nacimiento" 
-                onChange={(date) => console.log(date)} 
+                onChange={(date) => formik.setFieldValue('birthday', date)} 
               />
             </div>
             <Input
+              error={formik.touched.email && formik.errors.email}
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -94,6 +138,7 @@ const PlayerForm: React.FC = () => {
               label="Correo electronico" />
             <div className="grid grid-cols-2 gap-6">
               <Input
+                error={formik.touched.eps && formik.errors.eps}
                 value={formik.values.eps}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -102,6 +147,7 @@ const PlayerForm: React.FC = () => {
                 placeholder="EPS..." 
                 label="Eps" />
               <NumberFormat
+                error={formik.touched.phone && formik.errors.phone}
                 value={formik.values.phone}
                 onValueChange={({ value }) => formik.setFieldValue('phone', value)}
                 onBlur={formik.handleBlur}
@@ -113,7 +159,25 @@ const PlayerForm: React.FC = () => {
                 format="(###) ### ####" 
               />
             </div>
-            <Button type="submit" full>Crear jugador</Button>
+            <Transition
+              show={Boolean(error)}
+              enter="transition-opacity duration-75"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity duration-150"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Message>
+                {error}
+              </Message>
+            </Transition>
+            <Button
+              disabled={!formik.isValid || formik.isSubmitting} 
+              type="submit" 
+              full>
+                Crear jugador
+            </Button>
           </div>
         </form>
       </div>
