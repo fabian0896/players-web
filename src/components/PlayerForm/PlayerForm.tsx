@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Input, 
   Button, 
@@ -12,12 +12,13 @@ import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Transition } from '@headlessui/react';
 
-import { PlayerCreate } from '../../react-app-env';
+import { PlayerCreate, PLayerResponse } from '../../react-app-env';
 import WebcamCapture from '../WebcamCapture/WebcamCapture';
 import Picture  from './Picture';
 
 interface PlayerFormProps {
   onSubmit: (values: PlayerCreate, picture: string | null, actions:FormikHelpers<PlayerCreate>) => Promise<void>;
+  editData?: PLayerResponse
 };
 
 const validationSchema = Yup.object().shape({
@@ -30,7 +31,7 @@ const validationSchema = Yup.object().shape({
   birthday: Yup.date().required(),
 });
 
-const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit }) => {
+const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit, editData }) => {
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
@@ -70,6 +71,27 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit }) => {
     setPicture(imageSrc);
     setOpen(false);
   }
+
+  useEffect(() => {
+    if (!editData) {
+      return;
+    }
+
+    formik.setValues({
+      firstName: editData.firstName,
+      lastName: editData.lastName,
+      birthday: new Date(editData.birthday),
+      phone: editData.phone,
+      email: editData.email,
+      eps: editData.eps,
+      cedula: editData.eps,
+    });
+    
+    if (editData.images) {
+      setPicture(editData.images.large);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editData])
 
   return (
     <>
@@ -124,6 +146,7 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit }) => {
                 label="Cedula" 
               />
               <DatePicker
+                value={formik.values.birthday}
                 label="Fecha de nacimiento" 
                 onChange={(date) => formik.setFieldValue('birthday', date)} 
               />

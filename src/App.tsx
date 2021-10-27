@@ -4,7 +4,8 @@ import {
   Players,
   Login,
   Signup,
-  NewPlayer
+  NewPlayer,
+  EditPlayer,
 } from './pages';
 
 import { PrivateRoute } from './components';
@@ -15,6 +16,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <PrivateRoute path="/" exact component={Home} />
+          <PrivateRoute path="/players/edit/:id" component={EditPlayer} />
           <PrivateRoute path="/players/new" component={NewPlayer} />
           <PrivateRoute path="/players" component={Players} />
           <Route path="/login" component={Login} />

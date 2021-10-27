@@ -19,13 +19,13 @@ type Step = 'year' | 'month' | 'day';
 
 interface DatePickerProps {
   onChange: (date: Date) => void;
-  value?: Date,
-  label?: string
+  value: Date,
+  label?: string,
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({ onChange, label }) => {
+const DatePicker: React.FC<DatePickerProps> = ({ onChange, label, value }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date>(value);
   const [step, setStep] = useState<Step>('year');
   const [inputValue, setInputValue] = useState<string>('');
 
@@ -41,18 +41,21 @@ const DatePicker: React.FC<DatePickerProps> = ({ onChange, label }) => {
   const handleYeraSelect = (selectedYear: number) => {
     const newDate = setYear(date, selectedYear);
     setDate(newDate);
+    // onChange(newDate);
     setStep('month');
   };
 
   const handleMonthSelect = (selectedMonth: number) => {
     const newDate = setMonth(date, selectedMonth);
     setDate(newDate);
+    // onChange(newDate)
     setStep('day');
   };
 
   const handleDaySelect = (selectedDay: number) => {
     const newDate = setDay(date, selectedDay);
-    setDate(newDate);
+    // setDate(newDate);
+    onChange(newDate);
     setOpen(false);
     setInputValue(format(newDate, 'dd/MM/yyy'));
   };
@@ -91,15 +94,19 @@ const DatePicker: React.FC<DatePickerProps> = ({ onChange, label }) => {
     if (!isNaN(year)) {
       tempDate = setYear(tempDate, year);
     }
-    setDate(tempDate);
+    //setDate(tempDate);
+    if (!isNaN(days) && !isNaN(months) && !isNaN(year)) {
+      onChange(tempDate);
+    } 
     setInputValue(value);
   }
 
   useEffect(() => {
-    onChange(date);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date])
+    setInputValue(format(value, 'dd/MM/yyy'));
+  }, [value])
 
+
+  
   return(
     <Fragment>
       <div className="relative">
@@ -158,9 +165,9 @@ const DatePicker: React.FC<DatePickerProps> = ({ onChange, label }) => {
                 >
                   {title}
                 </Dialog.Title>
-                {step === 'day' && <DaySelect onSelect={handleDaySelect} date={date} />}
-                {step === 'month' && <MonthSelect onSelect={handleMonthSelect} date={date} />}
-                {step === 'year' && <YearSelect onSelect={handleYeraSelect} date={date} />}
+                {step === 'day' && <DaySelect onSelect={handleDaySelect} date={value} />}
+                {step === 'month' && <MonthSelect onSelect={handleMonthSelect} date={value} />}
+                {step === 'year' && <YearSelect onSelect={handleYeraSelect} date={value} />}
               </div>
             </Transition.Child>
           </div>

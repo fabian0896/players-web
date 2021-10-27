@@ -20,6 +20,15 @@ class PlayerService{
     return data;
   }
 
+  static async getById(id: number, token: string | null) {
+    const { data } = await axios.get<PLayerResponse>(`${config.api}/players/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    return data;
+  }
+
   async saveWithImage(imageSrc: string, token: string) {
     const { data: file } = await axios.get<Blob>(imageSrc, {
       responseType: 'blob',
@@ -48,6 +57,16 @@ class PlayerService{
     });
     return data;
   }
+
+  static async update(id: number, playerData: Partial<PlayerCreate>, token: string | null) {
+    const { data } = await axios.patch<PLayerResponse>(`${config.api}/players/${id}`, playerData, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return data;
+  }
+
 }
 
 export default PlayerService;
