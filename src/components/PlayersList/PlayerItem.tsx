@@ -17,7 +17,7 @@ const PLayerItem: React.FC<PLayerItemProps> = ({ player }) => {
   const age = useMemo(() => differenceInYears(new Date(), new Date(player.birthday)), [player.birthday]);
 
   return(
-    <div className="w-full rounded-lg bg-gray-100 border">
+    <div className="w-full rounded-lg bg-white shadow-lg">
       <div className="p-4 pb-0 flex justify-between items-start">
         <span className={`text-xs p-1 ${player.active ? 'bg-green-400' : 'bg-red-500'} rounded text-white font-semibold`}>
           {player.active ? 'Activo' : 'Inactivo'}

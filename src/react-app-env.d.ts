@@ -32,6 +32,13 @@ export type PlayerCreate = {
   picture?: string,
 }
 
+export interface Creator {
+  id: number;
+  name: string;
+  avatar: string;
+  role: string;
+}
+
 export interface Images {
   id?: number;
   small: string;
@@ -54,4 +61,5 @@ export interface PLayerResponse {
   createdAt: Date;
   updatedAt: Date;
   images?: Images | null;
+  creator?: Creator;
 }

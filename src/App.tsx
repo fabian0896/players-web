@@ -6,6 +6,7 @@ import {
   Signup,
   NewPlayer,
   EditPlayer,
+  PlayerDetails,
 } from './pages';
 
 import { PrivateRoute } from './components';
@@ -18,6 +19,7 @@ function App() {
           <PrivateRoute path="/" exact component={Home} />
           <PrivateRoute path="/players/edit/:id" component={EditPlayer} />
           <PrivateRoute path="/players/new" component={NewPlayer} />
+          <PrivateRoute path="/players/:id" component={PlayerDetails} />
           <PrivateRoute path="/players" component={Players} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />

@@ -12,7 +12,7 @@ interface SideBarProps {
 
 const SideBar: React.FC<SideBarProps> = ({ onLogout, user }) => {
   return(
-    <div className="flex flex-col w-72 h-screen bg-gray-100 shadow-lg border-r border-gray-200">
+    <div className="flex flex-col w-72 h-screen bg-white shadow-lg border-r border-gray-200">
     <div className="p-5">
       <img
         src="https://1000marcas.net/wp-content/uploads/2019/12/NBA-Logo.png" 

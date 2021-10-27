@@ -9,3 +9,7 @@ export { default as Modal } from './Modal';
 export { default as DatePicker } from './DatePicker';
 export { default as LoadingOverlay } from './LoadingOverlay';
 export { default as PlayersList } from './PlayersList';
+export { default as ErrorPage } from './ErrorPage';
+export { default as PlayerInfoCard } from './PlayerInfoCard';
+export { default as ButtonCore } from './ButtonCore';
+export { default as Switch } from './Switch';

@@ -110,7 +110,7 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit, editData }) => {
           onCancel={handleCloseModal}
           onCapture={handleCapture}/>
       </Modal>
-      <div className="max-w-3xl mx-auto p-10 rounded-lg bg-white">
+      <div className="max-w-3xl mx-auto p-10 rounded-lg bg-white shadow-lg">
         <form onSubmit={formik.handleSubmit}>
           <div className="space-y-6">
             <Picture picture={picture || editPicture} onClick={() => setOpen(true)} />
