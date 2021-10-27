@@ -67,6 +67,34 @@ class PlayerService{
     return data;
   }
 
+  static async updateWithImage(id: number, playerData: Partial<PlayerCreate>, imageSrc: string, token: string | null) {
+    const file = await this.getBlob(imageSrc);
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    for (let [key, value] of Object.entries(playerData)) {
+      if (value instanceof Date) {
+        value = value.toISOString();
+      }
+      formData.append(key, value);
+    }
+
+    const { data } = await axios.patch<PLayerResponse>(`${config.api}/players/${id}/image`, formData, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    return data;
+  }
+
+  private static async getBlob(imageSrc: string): Promise<Blob> {
+    const { data: file } = await axios.get<Blob>(imageSrc, {
+      responseType: 'blob',
+    });
+    return file;
+  }
+
 }
 
 export default PlayerService;

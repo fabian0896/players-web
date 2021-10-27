@@ -36,6 +36,7 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit, editData }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [picture, setPicture] = useState<string | null>(null);
+  const [editPicture, setEditPicture] = useState<string | null>(null);
 
   const formik = useFormik<PlayerCreate>({
     initialValues: {
@@ -68,6 +69,7 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit, editData }) => {
   }
 
   const handleCapture = (imageSrc: string | null) => {
+    formik.validateForm()
     setPicture(imageSrc);
     setOpen(false);
   }
@@ -84,11 +86,11 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit, editData }) => {
       phone: editData.phone,
       email: editData.email,
       eps: editData.eps,
-      cedula: editData.eps,
+      cedula: editData.cedula,
     });
     
     if (editData.images) {
-      setPicture(editData.images.large);
+      setEditPicture(editData.images.large);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editData])
@@ -111,7 +113,7 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit, editData }) => {
       <div className="max-w-3xl mx-auto p-10 rounded-lg bg-white">
         <form onSubmit={formik.handleSubmit}>
           <div className="space-y-6">
-            <Picture picture={picture} onClick={() => setOpen(true)} />
+            <Picture picture={picture || editPicture} onClick={() => setOpen(true)} />
             <div className="grid grid-cols-2 gap-6">
               <Input
                 error={formik.touched.firstName && formik.errors.firstName}

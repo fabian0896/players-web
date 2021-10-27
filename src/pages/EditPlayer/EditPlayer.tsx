@@ -18,7 +18,13 @@ const EditPlayer: React.FC = () => {
 
   const handleSubmit = useCallback(async (values: PlayerCreate, picture: string | null) => {
     try {
-      await PlayerService.update(Number(id), values, token);
+      if (picture) {
+        console.log('se actualiza con la imagen');
+        await PlayerService.updateWithImage(Number(id), values, picture, token);
+      } else {
+        console.log('se va a actualizar sin imagen');
+        await PlayerService.update(Number(id), values, token);
+      }
       history.push('/players');
     } catch (error) {
       throw new Error('Algo salio mal al actualizar el jugador 😢');
