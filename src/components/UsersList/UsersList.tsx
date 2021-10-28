@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import UserItem from "./UserItem";
+import UserItem from './UserItem';
 
 const UsersList: React.FC = () => {
   return(
@@ -10,7 +10,7 @@ const UsersList: React.FC = () => {
           <tr className="border-b-2 text-gray-800 font-semibold">
             <th className="text-left p-3">Nombre</th>
             <th>Role</th>
-            <th>status</th>
+            <th>Activo</th>
           </tr>
         </thead>
         <tbody>

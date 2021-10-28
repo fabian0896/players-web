@@ -121,9 +121,9 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit, editData }) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 type="text"
-                name="firstName" 
-                placeholder="Nombre..." 
-                label="Nombres" 
+                name="firstName"
+                placeholder="Nombre..."
+                label="Nombres"
               />
               <Input
                 error={formik.touched.lastName && formik.errors.lastName}
@@ -144,7 +144,7 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit, editData }) => {
                 onBlur={formik.handleBlur}
                 name="cedula"
                 type="text" 
-                placeholder="" 
+                placeholder="No. de cedula..." 
                 label="Cedula" 
               />
               <DatePicker
@@ -159,7 +159,8 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit, editData }) => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               type="email"
-              name="email" 
+              name="email"
+              placeholder="Correo electronico..." 
               label="Correo electronico" />
             <div className="grid grid-cols-2 gap-6">
               <Input

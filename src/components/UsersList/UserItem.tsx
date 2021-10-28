@@ -1,4 +1,5 @@
 import React from "react";
+import { Switch } from "..";
 import RoleSelector from "./RoleSelector";
 
 const UserItem: React.FC = () => {
@@ -19,8 +20,8 @@ const UserItem: React.FC = () => {
         <RoleSelector />
       </td>
       <td className="text-center">
-        <span className="bg-green-500 py-1 px-3 text-sm rounded font-semibold text-white">
-          activo
+        <span className="">
+          <Switch />
         </span>
       </td>
     </tr>

@@ -1,20 +1,22 @@
 import { Menu } from "@headlessui/react";
 import React from "react";
-import { FaChevronDown } from 'react-icons/fa';
+import { FaChevronDown, FaCheck } from 'react-icons/fa';
 
 interface ItemProps {
   title: string
+  checked?: boolean
 }
 
-const Item: React.FC<ItemProps> = ({ title }) => {
+const Item: React.FC<ItemProps> = ({ title, checked }) => {
   return(
     <Menu.Item onClick={() => console.log('seleccionado')}>
       {({ active }) => (
         <div className="p-1">
           <button className={`${active ? 'bg-red-500 text-white' : 'text-gray-800'}
-            block w-full py-2 px-2 text-left rounded-md box-border`}
+            flex items-center justify-between w-full py-2 px-2 text-left rounded-md box-border`}
           >
             {title}
+            {checked && <FaCheck size={12} />}
           </button>
         </div>
       )}
@@ -32,7 +34,7 @@ const RoleSelector: React.FC = () => {
       </Menu.Button>
       <Menu.Items className="absolute outline-none border bg-white rounded-md shadow-lg w-40">
           <Item title="Administrador" />
-          <Item title="Editor" />
+          <Item title="Editor" checked />
           <Item title="Lector" />     
       </Menu.Items>
     </Menu>
