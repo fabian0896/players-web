@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
-import { ErrorPage, PlayerInfoCard } from '../../components';
+import { Button, ErrorPage, Input, Modal, PlayerInfoCard } from '../../components';
 import { useGetPlayer } from '../../hooks';
 
 type PlayerDetailsParams = {
@@ -8,6 +8,9 @@ type PlayerDetailsParams = {
 };
 
 const PlayerDetails: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [comfirmMessage, setComfirmMessage] = useState('');
+
   const { id } = useParams<PlayerDetailsParams>();
   const history = useHistory();
   const location = useLocation();
@@ -54,10 +57,31 @@ const PlayerDetails: React.FC = () => {
 
   return(
     <div className="max-w-3xl mx-auto">
+      <Modal
+        title="Eliminar jugador!"
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+      >
+        <p className="text-center text-gray-700 my-5">
+          escriba la palabra <strong className="font-bold text-gray-900">eliminar</strong> para poder borrar el jugador de la base de datos
+        </p>
+        <Input
+          value={comfirmMessage}
+          onChange={({ target }) => setComfirmMessage(target.value)}
+          className="mb-5" 
+        />
+        <Button
+          onClick={handleDestroy}
+          disabled={comfirmMessage.toLocaleLowerCase() !== 'eliminar'} 
+          full
+        >
+            Eliminar
+        </Button>
+      </Modal>
       <PlayerInfoCard
         onChangeActive={(_, active) => handleUpdateActive(active)}
         onEdit={handleEdit}
-        onDelete={handleDestroy}
+        onDelete={() => setModalOpen(true)}
         onSendCarnet={() => console.log('Enviando carnet a jugador...')}
         player={data} 
       />

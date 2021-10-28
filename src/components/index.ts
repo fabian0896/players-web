@@ -13,3 +13,4 @@ export { default as ErrorPage } from './ErrorPage';
 export { default as PlayerInfoCard } from './PlayerInfoCard';
 export { default as ButtonCore } from './ButtonCore';
 export { default as Switch } from './Switch';
+export { default as UsersList } from './UsersList';

@@ -7,6 +7,7 @@ import {
   NewPlayer,
   EditPlayer,
   PlayerDetails,
+  Users
 } from './pages';
 
 import { PrivateRoute } from './components';
@@ -21,6 +22,7 @@ function App() {
           <PrivateRoute path="/players/new" component={NewPlayer} />
           <PrivateRoute path="/players/:id" component={PlayerDetails} />
           <PrivateRoute path="/players" component={Players} />
+          <PrivateRoute path="/users" component={Users} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Redirect to="/" />

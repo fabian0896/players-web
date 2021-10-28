@@ -5,3 +5,4 @@ export { default as Signup } from './Signup';
 export { default as NewPlayer } from './NewPlayer';
 export { default as EditPlayer } from './EditPlayer';
 export { default as PlayerDetails } from './PLayerDetails';
+export { default as Users } from './Users';
