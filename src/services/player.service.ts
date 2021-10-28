@@ -39,6 +39,9 @@ class PlayerService{
       if (value instanceof Date) {
         value = value.toISOString();
       }
+      if (typeof value === 'boolean') {
+        value = String(value);
+      }
       formData.append(key, value)
     }
     const { data } = await axios.post<PLayerResponse>(`${config.api}/players/image`, formData, {
@@ -77,6 +80,9 @@ class PlayerService{
       if (value instanceof Date) {
         value = value.toISOString();
       }
+      if (typeof value === 'boolean') {
+        value = String(value);
+      }
       formData.append(key, value);
     }
 
@@ -86,6 +92,14 @@ class PlayerService{
       },
     });
     return data;
+  }
+
+  static async destroy(id: number, token: string | null) {
+    await axios.delete(`${config.api}/players/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
   }
 
   private static async getBlob(imageSrc: string): Promise<Blob> {

@@ -1,15 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { AuthProvider } from './context/auth';
 
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+        <ReactQueryDevtools initialIsOpen={true} />
+      </QueryClientProvider>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')

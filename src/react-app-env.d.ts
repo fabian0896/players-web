@@ -30,6 +30,7 @@ export type PlayerCreate = {
   cedula: string,
   phone: string,
   picture?: string,
+  active?: boolean
 }
 
 export interface Creator {

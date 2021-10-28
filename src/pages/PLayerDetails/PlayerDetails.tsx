@@ -1,7 +1,6 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { ErrorPage, PlayerInfoCard } from '../../components';
-import { useAuth } from '../../context/auth';
 import { useGetPlayer } from '../../hooks';
 
 type PlayerDetailsParams = {
@@ -10,14 +9,37 @@ type PlayerDetailsParams = {
 
 const PlayerDetails: React.FC = () => {
   const { id } = useParams<PlayerDetailsParams>();
-  const { token } = useAuth();
-  const { data: player, loading, error } = useGetPlayer(id, token);
+  const history = useHistory();
+  const location = useLocation();
+  const { 
+    data, 
+    loading, 
+    error,
+    updateActive,
+    destory,
+  } = useGetPlayer(id);
+
+  const handleEdit = (playerId: number) => {
+    history.push({
+      pathname: `/players/edit/${playerId}`,
+      state: { from: location },
+    });
+  };
+
+  const handleUpdateActive = (active: boolean) => {
+    updateActive({ active });
+  };
+
+  const handleDestroy = async () => {
+    await destory();
+    history.push('/players');
+  }
 
   if (loading) {
     return null;
   }
 
-  if (error || !player) {
+  if (error || !data) {
     return(
       <ErrorPage 
         message="Algo salio mal, esto puede deberse a que se este busacndo un 
@@ -32,7 +54,13 @@ const PlayerDetails: React.FC = () => {
 
   return(
     <div className="max-w-3xl mx-auto">
-      <PlayerInfoCard player={player} />
+      <PlayerInfoCard
+        onChangeActive={(_, active) => handleUpdateActive(active)}
+        onEdit={handleEdit}
+        onDelete={handleDestroy}
+        onSendCarnet={() => console.log('Enviando carnet a jugador...')}
+        player={data} 
+      />
     </div>
   );
 };

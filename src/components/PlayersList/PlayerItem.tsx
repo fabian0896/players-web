@@ -40,7 +40,7 @@ const PLayerItem: React.FC<PLayerItemProps> = ({ player }) => {
         </div>
       </div>
       <div className="text-center p-5 pt-0">
-        <h3 className="text-gray-800 font-semibold leading-5">{startCase(`${player.firstName} ${player.lastName}`)}</h3>
+        <Link to={`/players/${player.id}`} className="text-gray-800 font-semibold leading-5 block mb-1">{startCase(`${player.firstName} ${player.lastName}`)}</Link>
         <p className="text-gray-600 text-sm">{player.email}</p>
         <p className="text-gray-600 text-sm font-semibold">{age} años</p>
       </div>

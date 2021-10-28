@@ -201,7 +201,7 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit, editData }) => {
               disabled={!formik.isValid || formik.isSubmitting} 
               type="submit" 
               full>
-                Crear jugador
+                { editData ? 'Editar jugador' : 'Crear jugador' }
             </Button>
           </div>
         </form>

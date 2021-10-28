@@ -1,31 +1,42 @@
-import { useEffect, useState } from 'react';
-import { PLayerResponse } from '../react-app-env';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useAuth } from '../context/auth';
 import { PlayerService } from '../services';
 
-const useGetPlayer = (id: string | number, token: string | null) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
-  const [player, setPlayer] = useState<PLayerResponse | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-      setError(false);
-      try {
-        const res = await PlayerService.getById(Number(id), token);
-        setPlayer(res);
-      } catch (error) {
-        setError(true);
-      } finally {
-        setLoading(false);
+const useGetPlayer = (id: string | number) => {
+  const { token } = useAuth();
+  const queryClient = useQueryClient();
+  const { data, isError, isLoading } = useQuery(
+    ['players', id], 
+    () => {
+      return PlayerService.getById(Number(id), token)
+    },
+    { retry: false }
+  );
+  
+  const updateActiveMutation = useMutation(
+    ({ active }: { active: boolean }) => PlayerService.update(Number(id), { active }, token),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['players', id]);
       }
-    })();
-  }, [id, token]);
+    }
+  )
+
+  const deleteMutation = useMutation(
+    () => PlayerService.destroy(Number(id), token),
+    {
+      onSuccess: () => {
+        queryClient.removeQueries(['plyers', id], { exact: true });
+      }
+    }
+  )
 
   return {
-    data: player,
-    loading,
-    error,
+    data,
+    loading: isLoading,
+    error: isError,
+    updateActive: updateActiveMutation.mutateAsync,
+    destory: deleteMutation.mutateAsync,
   }
 }
 

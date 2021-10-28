@@ -1,10 +1,12 @@
 import React, { useCallback } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { PlayerForm, ErrorPage } from '../../components';
 import { useAuth } from '../../context/auth';
 import { useGetPlayer } from '../../hooks';
 import { PlayerCreate } from '../../react-app-env';
 import { PlayerService } from '../../services';
+
+import { Location } from 'history';
 
 type EditPLayerPararams = {
   id: string,
@@ -13,8 +15,9 @@ type EditPLayerPararams = {
 const EditPlayer: React.FC = () => {
   const { id } = useParams<EditPLayerPararams>();
   const history = useHistory();
+  const location = useLocation<{ from: Location }>();
   const { token } = useAuth();
-  const { data, loading, error } = useGetPlayer(id, token);
+  const { data, loading, error } = useGetPlayer(id);
 
   const handleGoPlayerList = () => {
     history.push('/players');
@@ -27,11 +30,12 @@ const EditPlayer: React.FC = () => {
       } else {
         await PlayerService.update(Number(id), values, token);
       }
-      history.push('/players');
+      const { from } = location.state || { from: { pathname: '/players' } };
+      history.push(from);
     } catch (error) {
       throw new Error('Algo salio mal al actualizar el jugador 😢');
     }
-  }, [id, token, history]);
+  }, [id, token, history, location.state]);
 
   if (loading) {
     return null;

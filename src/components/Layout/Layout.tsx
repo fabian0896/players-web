@@ -3,7 +3,7 @@ import { useAuth } from "../../context/auth";
 import { useHistory } from 'react-router-dom';
 import { FaUserPlus } from 'react-icons/fa';
 import SideBar from "./SideBar";
-import { Button, ButtonCore } from "..";
+import { ButtonCore } from "..";
 
 import './Layout.css';
 
