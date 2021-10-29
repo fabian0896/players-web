@@ -3,17 +3,16 @@ import { Input, Button, Message } from '../../components';
 import { FaUserAlt, FaLock, FaMailBulk } from 'react-icons/fa'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { SignupCredentials } from "../../react-app-env";
-
-interface SignupFormProps {
-  onSubmit: (values: Partial<SignupCredentials>) => Promise<void>
-}
 
 export interface SignupFormFields {
   name: string
   password: string
   email: string
 } 
+
+interface SignupFormProps {
+  onSubmit: (values: SignupFormFields) => Promise<void>
+}
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required(),
@@ -54,7 +53,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmit }) => {
         </div>
         <div className={`${error ? 'p-4' : 'p-0'}`}>
           <Message show={error}>
-          Al parecer la invitación no es valida o hay un problema en el servidor. Imntenta más tarde
+            Al parecer la invitación no es valida o hay un problema en el servidor. Imntenta más tarde
           </Message>
         </div>
         <form onSubmit={formik.handleSubmit} className="p-4 space-y-8">

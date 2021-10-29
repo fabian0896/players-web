@@ -1,11 +1,13 @@
 import React, { useMemo } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
-import { SignupForm } from '../../components';
+import { ErrorPage, SignupForm } from '../../components';
+import { SignupFormFields } from "../../components/SignupForm/SignupForm";
 import { SignupCredentials } from "../../react-app-env";
 import { AuthService } from "../../services";
 
 const Signup: React.FC = () => {
+  const history = useHistory();
   const { search } = useLocation();
 
   const token = useMemo(() => {
@@ -13,14 +15,25 @@ const Signup: React.FC = () => {
     return query.get('token');
   }, [search]);
 
-  const handleSubmit = async (values: Partial<SignupCredentials>) => {
+  const handleSubmit = async (values: SignupFormFields) => {
     const credentials: SignupCredentials = {
-      name: values.name || '',
-      email: values.email || '',
-      password: values.password || '',
+      ...values,
       inviteToken: token || '',
     };
     await AuthService.signup(credentials);
+    history.push('/login');
+  }
+
+  if (!token) {
+    return(
+      <ErrorPage
+        title="Invitación invalida"
+        message="Para poder registrarte es necesaria una invitación valida. 
+        Comunicate con un administrador para mas información"
+        buttonTitle="Ir a pagina de ingreso"
+        onClick={() => history.push('/login')}
+      />
+    )
   }
 
   return(
