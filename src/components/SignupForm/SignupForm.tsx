@@ -6,25 +6,27 @@ import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { LoginCredentials } from "../../react-app-env";
 
-interface LoginFormProps {
-  onSubmit: (values: LoginCredentials, actions?: FormikHelpers<LoginCredentials>) => Promise<void>,
+interface SignupFormProps {
+  onSubmit: () => void
   error?: boolean
 }
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required(),
-  password: Yup.string().required(),
+  password: Yup.string(),
+  confirm: Yup.string().oneOf([Yup.ref('password')]).required(),
 })
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
+const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, error }) => {
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
+      confirm: ''
     },
     validationSchema,
     async onSubmit(values, actions) {
-      await onSubmit(values, actions);
+      console.log(values, actions);
     },
   });
   return(
@@ -32,10 +34,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
       <div className="absolute transform rotate-3 top-0 left-0 w-full bottom-0 bg-gradient-to-tr from-red-500 to-red-900 rounded-lg"></div>
       <div className="relative bg-white h-full w-full shadow rounded-lg">
         <div className="p-4">
-          <img
+          {/* <img
             src="https://1000marcas.net/wp-content/uploads/2019/12/NBA-Logo.png" 
             alt="nba-logo" 
-          />
+          /> */}
+          <h1 className="text-gray-800 text-2xl font-semibold mb-2 text-center">Registro</h1>
+          <p className="text-gray-600 text-sm text-center">Ingresa el correo electronico y una contraseña. Estas seran las credenciales con las que podras acceder al sistema</p>
         </div>
         <Message show={error}>
           Usuario o contraseña incorrectos. Intenta nuevamente
@@ -55,10 +59,22 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            error={formik.touched.password && formik.errors.password}
             name="password" 
             type="password" 
             label="Contraseña"
             placeholder="contraseña..."
+            icon={FaLock} 
+          />
+          <Input
+            value={formik.values.confirm}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.confirm && formik.errors.confirm}
+            name="confirm" 
+            type="password" 
+            label="Confirma tu contraseña"
+            placeholder="Confirma tu contraseña"
             icon={FaLock} 
           />
           <div>
@@ -67,17 +83,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
               disabled={formik.isSubmitting || !formik.isValid} 
               type="submit" 
               className="mb-5">
-                Ingresar
+                Registrarme
               </Button>
-            <p className="text-gray-700 text-center leading-5 text-sm">
-              No recuerdas tu contraseña? 🤦‍♂️ {' '}
-              <Link 
-                className="text-red-500 font-semibold underline"
-                to="/home"
-              >
-                recuperala aqui
-              </Link>
-            </p>
           </div>
         </form>
       </div>
@@ -85,4 +92,4 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
   );
 };
 
-export default LoginForm;
+export default SignupForm;

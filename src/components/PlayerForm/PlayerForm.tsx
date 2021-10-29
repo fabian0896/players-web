@@ -184,20 +184,10 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ onSubmit, editData }) => {
                 customInput={Input} 
                 format="(###) ### ####" 
               />
-            </div>
-            <Transition
-              show={Boolean(error)}
-              enter="transition-opacity duration-75"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity duration-150"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Message>
-                {error}
-              </Message>
-            </Transition>
+            </div> 
+            <Message show={Boolean(error)}>
+              {error}
+            </Message>
             <Button
               disabled={!formik.isValid || formik.isSubmitting} 
               type="submit" 

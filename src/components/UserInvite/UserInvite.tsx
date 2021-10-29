@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Transition } from '@headlessui/react';
 
-import { Button, Input, ListBox, Message } from '..';
+import { Button, Input, ListBox, Message, Loader } from '..';
 import { Invite } from '../../react-app-env';
 
 type Options = {
@@ -39,7 +39,10 @@ const validationSchema = Yup.object().shape({
 })
 
 const UserInvite: React.FC<UserInviteProps> = ({ onInvite }) => {
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -48,19 +51,30 @@ const UserInvite: React.FC<UserInviteProps> = ({ onInvite }) => {
     validationSchema,
     async onSubmit(values, actions) {
       setError(false);
+      setLoading(true);
       try {
         await onInvite({
           email: values.email,
           role: values.role.value,
         });
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false)
+        }, 3000);
       } catch (error) {
         setError(true);
+      } finally {
+        setLoading(false)
       }
     }
   });
 
   return(
-    <div className="bg-white rounded-lg shadow-lg p-5">
+    <div className="bg-white rounded-lg shadow-lg p-5 relative">
+      <Loader
+        message="Enviando invitación..."  
+        loading={loading}
+      />
       <div className="pb-5 border-b">
         <h2 className="text-gray-800 text-xl font-semibold mb-2">Generar un invitación</h2>
         <p className="text-sm text-gray-700">
@@ -85,19 +99,12 @@ const UserInvite: React.FC<UserInviteProps> = ({ onInvite }) => {
           value={formik.values.role}
           options={options}
         />
-        <Transition
-          show={error}
-          enter="transition duration-100 ease-out"
-          enterFrom="transform scale-95 opacity-0"
-          enterTo="transform scale-100 opacity-100"
-          leave="transition duration-75 ease-out"
-          leaveFrom="transform scale-100 opacity-100"
-          leaveTo="transform scale-95 opacity-0"
-        >
-          <Message>
-            Algo salio mal 😢 posiblemente el usuario ya este registrado. Intenta nuevamente
-          </Message>
-        </Transition>
+        <Message show={error}>
+          Algo salio mal 😢 posiblemente el usuario ya este registrado. Intenta nuevamente
+        </Message>
+        <Message show={success} success>
+          La invitación se envio correctamente (es posible que este en la seccion de span).
+        </Message>
         <Button
           disabled={!formik.isValid || formik.isSubmitting} 
           type="submit" 
