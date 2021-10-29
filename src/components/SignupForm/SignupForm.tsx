@@ -15,6 +15,7 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email().required(),
   password: Yup.string(),
   confirm: Yup.string().oneOf([Yup.ref('password')]).required(),
+  name: Yup.string().required(),
 })
 
 const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, error }) => {
@@ -22,7 +23,8 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, error }) => {
     initialValues: {
       email: '',
       password: '',
-      confirm: ''
+      confirm: '',
+      name: ''
     },
     validationSchema,
     async onSubmit(values, actions) {
@@ -56,10 +58,24 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, error }) => {
             icon={FaUserAlt}
           />
           <Input
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.name && formik.errors.name}
+            name="name"
+            type="text"
+            label="Nombre"
+            placeholder="Nombre..."
+            icon={FaUserAlt}
+          />
+          <Input
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.password && formik.errors.password}
+            error={
+              (formik.touched.password && formik.errors.password) ||
+              (formik.touched.confirm && formik.errors.confirm)
+            }
             name="password" 
             type="password" 
             label="Contraseña"
