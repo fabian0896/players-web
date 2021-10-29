@@ -58,7 +58,9 @@ const UserInvite: React.FC<UserInviteProps> = ({ onInvite }) => {
         loading={loading}
       />
       <div className="pb-5 border-b">
-        <h2 className="text-gray-800 text-xl font-semibold mb-2">Generar un invitación</h2>
+        <h2 className="text-gray-800 text-xl font-semibold mb-2">
+          Invita un usuario
+        </h2>
         <p className="text-sm text-gray-700">
           La invitación se enviara al correo electronico.{' '}
           Es importante que se registre con el mismo correo electronico{' '}

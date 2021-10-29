@@ -8,7 +8,7 @@ class AuthService {
   static timerRef: ReturnType<typeof setTimeout>;
 
   static async login(credentials: LoginCredentials) {
-    const { data } = await axios.post<LoginResponse>('http://localhost:4000/api/v1/auth/login', credentials, {
+    const { data } = await axios.post<LoginResponse>(`${config.api}/auth/login`, credentials, {
         withCredentials: true,
     });
     return data;
@@ -16,7 +16,7 @@ class AuthService {
 
   static async logout() {
     clearTimeout(this.timerRef);
-    await axios.post('http://localhost:4000/api/v1/auth/logout', {}, {
+    await axios.post(`${config.api}/auth/logout`, {}, {
       withCredentials: true,
     });
   }
@@ -35,7 +35,7 @@ class AuthService {
   }
 
   static async refresh() {
-    const { data } = await axios.post<LoginResponse>('http://localhost:4000/api/v1/auth/token',{}, {
+    const { data } = await axios.post<LoginResponse>(`${config.api}/auth/token`,{}, {
       withCredentials: true,
     });
     return data;

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { NavLink } from 'react-router-dom';
 import { FaHome, FaBasketballBall, FaUsers, FaSignOutAlt } from 'react-icons/fa';
 import { User } from "../../react-app-env";
 
 import { startCase } from '../../utils';
+import config from "../../config";
 
 interface SideBarProps {
   onLogout: () => Promise<void>
@@ -11,6 +12,9 @@ interface SideBarProps {
 }
 
 const SideBar: React.FC<SideBarProps> = ({ onLogout, user }) => {
+  const role = useMemo(() => {
+    return config.roles.find((r) => r.value === user?.role)?.name || 'Indefinido';
+  }, [user]);
   return(
     <div className="flex flex-col w-72 h-screen bg-white shadow-lg border-r border-gray-200">
     <div className="p-5">
@@ -60,7 +64,7 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout, user }) => {
         <div className="col-span-7">
           <p className="w-full font-semibold text-gray-800 truncate">{startCase(user?.name)}</p>
           <p title={user?.email} className="w-full text-sm text-gray-600 truncate">{user?.email}</p>
-          <p className="text-sm font-semibold text-gray-600">{user?.role}</p>
+          <p className="text-sm font-semibold text-gray-600">{role}</p>
         </div>
       </div>
       <div>
