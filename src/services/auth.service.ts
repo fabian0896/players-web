@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { LoginCredentials, LoginResponse } from '../react-app-env';
+import config from '../config';
+import { Invite, InviteResponse, LoginCredentials, LoginResponse } from '../react-app-env';
 
 
 
@@ -36,6 +37,15 @@ class AuthService {
   static async refresh() {
     const { data } = await axios.post<LoginResponse>('http://localhost:4000/api/v1/auth/token',{}, {
       withCredentials: true,
+    });
+    return data;
+  }
+
+  static async invite(values: Invite, token: string | null) {
+    const { data } = await axios.post<InviteResponse>(`${config.api}/auth/invite`, values, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
     });
     return data;
   }

@@ -64,3 +64,12 @@ export interface PLayerResponse {
   images?: Images | null;
   creator?: Creator;
 }
+
+export type Invite = {
+  email: string,
+  role: 'admin' | 'editor' | 'reader'
+}
+
+export type InviteResponse = {
+  inviteToken: string,
+}

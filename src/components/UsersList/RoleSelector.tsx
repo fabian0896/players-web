@@ -32,7 +32,7 @@ const RoleSelector: React.FC = () => {
         <span>Administrador</span>
         <FaChevronDown size={12} className="ml-2" />
       </Menu.Button>
-      <Menu.Items className="absolute outline-none border bg-white rounded-md shadow-lg w-40">
+      <Menu.Items className="absolute z-30 outline-none border bg-white rounded-md shadow-lg w-40">
           <Item title="Administrador" />
           <Item title="Editor" checked />
           <Item title="Lector" />     

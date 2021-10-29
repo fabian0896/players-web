@@ -11,7 +11,7 @@ const UserItem: React.FC = () => {
 
           </div>
           <div>
-            <p className="text-gray-800">Fabian David Dueñas</p>
+            <p className="text-gray-800">Fabian David Dueñas Garcia</p>
             <p className="text-sm text-gray-600">fabian0896@outlook.com</p>
           </div>
         </div>
