@@ -81,7 +81,7 @@ const UserInvite: React.FC<UserInviteProps> = ({ onInvite }) => {
         />
         <ListBox
           label="Rol del usuario"
-          onCange={(value) => formik.setFieldValue('rol', value)}
+          onCange={(value) => formik.setFieldValue('role', value)}
           value={formik.values.role}
           options={options}
         />
