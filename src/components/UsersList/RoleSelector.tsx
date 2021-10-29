@@ -1,15 +1,19 @@
 import { Menu } from "@headlessui/react";
 import React from "react";
 import { FaChevronDown, FaCheck } from 'react-icons/fa';
+import config from "../../config";
+import { Role } from "../../react-app-env";
 
 interface ItemProps {
   title: string
-  checked?: boolean
+  checked?: boolean,
+  onClick: (value: Role) => void
+  value: Role
 }
 
-const Item: React.FC<ItemProps> = ({ title, checked }) => {
+const Item: React.FC<ItemProps> = ({ title, checked, onClick, value }) => {
   return(
-    <Menu.Item onClick={() => console.log('seleccionado')}>
+    <Menu.Item onClick={() => onClick(value)}>
       {({ active }) => (
         <div className="p-1">
           <button className={`${active ? 'bg-red-500 text-white' : 'text-gray-800'}
@@ -24,18 +28,27 @@ const Item: React.FC<ItemProps> = ({ title, checked }) => {
   )
 }
 
+interface RoleSelectorProps {
+  value: Role,
+  onChange: (role: Role) => void
+}
 
-const RoleSelector: React.FC = () => {
+const RoleSelector: React.FC<RoleSelectorProps> = ({ value, onChange }) => {
   return(
     <Menu>
       <Menu.Button className="inline-flex items-center justify-center">
-        <span>Administrador</span>
+        <span>{config.roles.find((r) => r.value === value)?.name || 'Indefinido'}</span>
         <FaChevronDown size={12} className="ml-2" />
       </Menu.Button>
       <Menu.Items className="absolute z-30 outline-none border bg-white rounded-md shadow-lg w-40">
-          <Item title="Administrador" />
-          <Item title="Editor" checked />
-          <Item title="Lector" />     
+        {config.roles.map((role) => (
+          <Item
+            key={role.value}
+            value={role.value}
+            onClick={onChange} 
+            title={role.name} 
+            checked={value === role.value} />
+        ))}   
       </Menu.Items>
     </Menu>
   );

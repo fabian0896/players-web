@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from '../config';
-import { Invite, InviteResponse, LoginCredentials, LoginResponse, SignupCredentials } from '../react-app-env';
+import { Invite, InviteResponse, LoginCredentials, LoginResponse, SignupCredentials, User } from '../react-app-env';
 
 
 
@@ -53,6 +53,24 @@ class AuthService {
   static async signup(values: SignupCredentials) {
     const { data } = await axios.post(`${config.api}/auth/signup`, values);
     return data;
+  }
+
+  static async getUsers(token: string | null) {
+    const { data } = await axios.get<User[]>(`${config.api}/auth/users`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    return data;
+  }
+
+  static async updateUser(id: number | string, data: Partial<User>, token: string | null) {
+    const { data: response } = await axios.patch<User>(`${config.api}/auth/users/${id}`, data, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    return response;
   }
 }
 

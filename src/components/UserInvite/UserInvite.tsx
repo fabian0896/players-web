@@ -1,34 +1,16 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Transition } from '@headlessui/react';
 
 import { Button, Input, ListBox, Message, Loader } from '..';
 import { Invite } from '../../react-app-env';
-
-type Options = {
-  value: 'admin' | 'editor' | 'reader',
-  name: string
-}
+import config from '../../config';
 
 interface UserInviteProps {
   onInvite: (values: Invite) => Promise<void>
 }
 
-const options: Options[] = [
-  {
-    value: 'reader',
-    name: 'Lector'
-  },
-  {
-    value: 'editor',
-    name: 'Editor'
-  }, 
-  {
-    value: 'admin',
-    name: 'Administrador'
-  }, 
-]
+const options = config.roles;
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required(),

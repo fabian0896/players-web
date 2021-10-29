@@ -1,8 +1,14 @@
 import React from 'react';
+import { UpdateUserValues, User } from '../../react-app-env';
 
 import UserItem from './UserItem';
 
-const UsersList: React.FC = () => {
+interface UsersListProps {
+  users: User[],
+  onUpdate: (id: number | string, values: UpdateUserValues) => Promise<void>,
+}
+
+const UsersList: React.FC<UsersListProps> = ({ users, onUpdate }) => {
   return(
     <div className="bg-white shadow-lg rounded-lg">
       <table className="table-auto w-full">
@@ -14,10 +20,9 @@ const UsersList: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          <UserItem />
-          <UserItem />
-          <UserItem />
-          <UserItem />
+          {users.map((user) => (
+            <UserItem onUpdate={onUpdate} key={user.id} user={user} />
+          ))}
         </tbody>
       </table>
     </div>

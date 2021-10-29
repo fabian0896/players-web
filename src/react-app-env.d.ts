@@ -1,5 +1,8 @@
 /// <reference types="react-scripts" />
 
+export type Role = 'admin' | 'reader' | 'editor'
+
+
 export interface LoginCredentials { 
   email: string,
   password: string,
@@ -16,9 +19,17 @@ export interface User {
   name: string;
   email: string;
   id: number;
-  role: 'admin' | 'reader' | 'editor';
+  role: Role;
   avatar: string;
+  active: boolean,
 }
+
+export interface UpdateUserValues {
+  name?: string
+  active?: boolean
+  role?: Role
+}
+
 
 export interface LoginResponse {
   token: string;
@@ -74,7 +85,7 @@ export interface PLayerResponse {
 
 export type Invite = {
   email: string,
-  role: 'admin' | 'editor' | 'reader'
+  role: Role
 }
 
 export type InviteResponse = {

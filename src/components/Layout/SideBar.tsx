@@ -52,14 +52,14 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout, user }) => {
       </ul>
     </div>
     <div className="flex-1"></div>
-    <div className="p-5 border-t border-gray-300">
-      <div className="flex space-x-3 mb-5">
-        <div>
+    <div className="p-5 border-t border-gray-300 w-full">
+      <div className="grid grid-cols-10 mb-5">
+        <div className="col-span-3">
           <img className="w-16 rounded shadow" src={user?.avatar} alt={user?.name} />
         </div>
-        <div className="flex-1">
-          <p className="font-semibold text-gray-800">{startCase(user?.name)}</p>
-          <p className="text-sm text-gray-600">{user?.email}</p>
+        <div className="col-span-7">
+          <p className="w-full font-semibold text-gray-800 truncate">{startCase(user?.name)}</p>
+          <p title={user?.email} className="w-full text-sm text-gray-600 truncate">{user?.email}</p>
           <p className="text-sm font-semibold text-gray-600">{user?.role}</p>
         </div>
       </div>
