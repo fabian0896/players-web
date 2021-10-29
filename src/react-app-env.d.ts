@@ -5,6 +5,13 @@ export interface LoginCredentials {
   password: string,
 }
 
+export interface SignupCredentials {
+  name: string
+  password: string
+  email: string
+  inviteToken: string,
+}
+
 export interface User {
   name: string;
   email: string;

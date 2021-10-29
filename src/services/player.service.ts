@@ -102,13 +102,13 @@ class PlayerService{
     });
   }
 
+
   private static async getBlob(imageSrc: string): Promise<Blob> {
     const { data: file } = await axios.get<Blob>(imageSrc, {
       responseType: 'blob',
     });
     return file;
   }
-
 }
 
 export default PlayerService;

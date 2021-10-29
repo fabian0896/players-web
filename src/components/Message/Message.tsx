@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from "react";
+import React, { Fragment, HTMLAttributes } from "react";
 import { BiErrorCircle } from 'react-icons/bi';
 import { Transition } from '@headlessui/react';
 import { FaCheck } from 'react-icons/fa';
@@ -14,6 +14,7 @@ const Message: React.FC<MessageProps> = ({ children, className, success, show })
   const Icon = success ? FaCheck : BiErrorCircle;
   return(
     <Transition
+      as={Fragment}
       show={Boolean(show)}
       enter="transition duration-100 ease-out"
       enterFrom="transform scale-95 opacity-0"

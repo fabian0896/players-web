@@ -10,7 +10,6 @@ import {
 import NumberFormat from 'react-number-format';
 import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Transition } from '@headlessui/react';
 
 import { PlayerCreate, PLayerResponse } from '../../react-app-env';
 import WebcamCapture from '../WebcamCapture/WebcamCapture';

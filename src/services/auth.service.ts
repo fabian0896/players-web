@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from '../config';
-import { Invite, InviteResponse, LoginCredentials, LoginResponse } from '../react-app-env';
+import { Invite, InviteResponse, LoginCredentials, LoginResponse, SignupCredentials } from '../react-app-env';
 
 
 
@@ -47,6 +47,11 @@ class AuthService {
         'Authorization': `Bearer ${token}`,
       },
     });
+    return data;
+  }
+
+  static async signup(values: SignupCredentials) {
+    const { data } = await axios.post(`${config.api}/auth/signup`, values);
     return data;
   }
 }
