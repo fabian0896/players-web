@@ -1,10 +1,10 @@
 import React from "react";
-import { PLayerResponse } from "../../react-app-env";
+import { PlayerData } from "../../react-app-env";
 
 import PLayerItem from "./PlayerItem";
 
 interface PlayersListProps {
-  players: PLayerResponse[]
+  players: PlayerData[]
 }
 
 const PlayersList: React.FC<PlayersListProps> = ({ players }) => {

@@ -66,7 +66,12 @@ export interface Images {
   playerId?: number;
 }
 
-export interface PLayerResponse {
+export interface PlayerResponse {
+  data: PlayerData[],
+  nextCursor?: number
+}
+
+export type PlayerData = {
   id: number;
   firstName: string;
   lastName: string;

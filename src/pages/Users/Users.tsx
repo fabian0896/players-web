@@ -37,7 +37,7 @@ const Users: React.FC = () => {
         message="Ocurrio un error al obtener los usuarios 
         puede deberse a que no tienes permisos para ver estos datos 
         o hay algun problema en el servidor. Comunicate con un administrador
-        on intenta mas tarde."
+        o intenta mas tarde."
         buttonTitle="Ir al incio"
         onClick={() => history.push('/home')}
       />

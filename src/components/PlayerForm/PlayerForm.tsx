@@ -11,13 +11,13 @@ import NumberFormat from 'react-number-format';
 import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { PlayerCreate, PLayerResponse } from '../../react-app-env';
+import { PlayerCreate, PlayerData } from '../../react-app-env';
 import WebcamCapture from '../WebcamCapture/WebcamCapture';
 import Picture  from './Picture';
 
 interface PlayerFormProps {
   onSubmit: (values: PlayerCreate, picture: string | null, actions:FormikHelpers<PlayerCreate>) => Promise<void>;
-  editData?: PLayerResponse
+  editData?: PlayerData
 };
 
 const validationSchema = Yup.object().shape({

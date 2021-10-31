@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PlayerCreate, PLayerResponse } from '../react-app-env';
+import { PlayerCreate, PlayerData, PlayerResponse } from '../react-app-env';
 
 import config from "../config";
 
@@ -12,7 +12,7 @@ class PlayerService{
   }
 
   static async getAll(token: string | null) {
-    const { data } = await axios.get<PLayerResponse[]>(`${config.api}/players`, {
+    const { data } = await axios.get<PlayerResponse>(`${config.api}/players`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -21,12 +21,12 @@ class PlayerService{
   }
 
   static async getById(id: number, token: string | null) {
-    const { data } = await axios.get<PLayerResponse>(`${config.api}/players/${id}`, {
+    const { data: response } = await axios.get<{ data: PlayerData}>(`${config.api}/players/${id}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
     });
-    return data;
+    return response.data;
   }
 
   async saveWithImage(imageSrc: string, token: string) {
@@ -44,7 +44,7 @@ class PlayerService{
       }
       formData.append(key, value)
     }
-    const { data } = await axios.post<PLayerResponse>(`${config.api}/players/image`, formData, {
+    const { data } = await axios.post<PlayerResponse>(`${config.api}/players/image`, formData, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -53,7 +53,7 @@ class PlayerService{
   }
 
   async save(token: string) {
-    const { data } = await axios.post<PLayerResponse>(`${config.api}/players`, this.playerData, {
+    const { data } = await axios.post<PlayerResponse>(`${config.api}/players`, this.playerData, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -62,7 +62,7 @@ class PlayerService{
   }
 
   static async update(id: number, playerData: Partial<PlayerCreate>, token: string | null) {
-    const { data } = await axios.patch<PLayerResponse>(`${config.api}/players/${id}`, playerData, {
+    const { data } = await axios.patch<PlayerResponse>(`${config.api}/players/${id}`, playerData, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -86,7 +86,7 @@ class PlayerService{
       formData.append(key, value);
     }
 
-    const { data } = await axios.patch<PLayerResponse>(`${config.api}/players/${id}/image`, formData, {
+    const { data } = await axios.patch<PlayerResponse>(`${config.api}/players/${id}/image`, formData, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },

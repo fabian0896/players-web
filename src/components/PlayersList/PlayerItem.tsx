@@ -2,14 +2,14 @@ import React, { useMemo } from "react";
 import { FaRegEdit } from 'react-icons/fa';
 import { differenceInYears } from 'date-fns';
 
-import { PLayerResponse } from "../../react-app-env";
+import { PlayerData } from "../../react-app-env";
 import { startCase } from "../../utils";
 
 import basketballSvg from '../../assets/svg/basketball.svg';
 import { Link } from "react-router-dom";
 
 interface PLayerItemProps {
-  player: PLayerResponse
+  player: PlayerData
 }
 
 const PLayerItem: React.FC<PLayerItemProps> = ({ player }) => {

@@ -5,7 +5,11 @@ import { PlayerService } from '../services';
 
 const usePLayers = () => {
   const { token } = useAuth();
-  const { data, isError, isLoading } = useQuery('players', () => PlayerService.getAll(token));
+  const { data, isError, isLoading } = useQuery('players', async () => {
+    const res = await PlayerService.getAll(token);
+    console.log(res);
+    return res.data;
+  });
   return {
     data,
     loading: isLoading,

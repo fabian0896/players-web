@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { PLayerResponse } from '../../react-app-env';
+import { PlayerData } from '../../react-app-env';
 import { differenceInYears, format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { FaRegTrashAlt, FaRegNewspaper, FaRegEdit } from 'react-icons/fa';
@@ -12,7 +12,7 @@ import './PlayerInfoCard.css';
 import basketballSvg from '../../assets/svg/basketball.svg';
 
 interface PlayerInfoCardProps {
-  player: PLayerResponse,
+  player: PlayerData,
   onDelete: (id: number) => void
   onEdit: (id: number) => void
   onSendCarnet: (id: number) => void
