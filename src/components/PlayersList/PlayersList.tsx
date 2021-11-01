@@ -9,7 +9,7 @@ interface PlayersListProps {
 
 const PlayersList: React.FC<PlayersListProps> = ({ players }) => {
   return(
-    <div className="grid grid-cols-3 gap-5">
+    <div className="grid grid-cols-3 gap-8">
       {players.map((player) => (
         <PLayerItem key={player.id} player={player} />
       ))}
