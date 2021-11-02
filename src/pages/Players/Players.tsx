@@ -19,8 +19,6 @@ const Players: React.FC = () => {
     hasNextPage
   } = usePlayers();
 
-  console.log(pages);
-
   if (loading) {
     return null;
   }
@@ -52,6 +50,11 @@ const Players: React.FC = () => {
             </Button>
           </div>
         )}
+        <input
+          placeholder="Buscar..." 
+          type="text" 
+          className="bg-white p-3 block w-full mb-5 rounded shadow-lg"
+        />
         <InfiniteScroll
           scrollableTarget="layout-container"
           dataLength={pages.length}

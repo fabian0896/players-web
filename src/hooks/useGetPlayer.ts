@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useAuth } from '../context/auth';
 import { PlayerService } from '../services';
 
 const useGetPlayer = (id: string | number) => {
   const { token } = useAuth();
+  const [customLoading, setCustomLoading] = useState(false);
   const queryClient = useQueryClient();
   const { data, isError, isLoading } = useQuery(
     ['players', id], 
@@ -20,7 +22,7 @@ const useGetPlayer = (id: string | number) => {
         queryClient.invalidateQueries(['players', id]);
       }
     }
-  )
+  );
 
   const deleteMutation = useMutation(
     () => PlayerService.destroy(Number(id), token),
@@ -29,7 +31,18 @@ const useGetPlayer = (id: string | number) => {
         queryClient.removeQueries(['plyers', id], { exact: true });
       }
     }
-  )
+  );
+
+  const sendCarnet = async () => {
+    setCustomLoading(true);
+    if (!data) {
+      setCustomLoading(false);
+      throw new Error('No user found');
+    }
+    const file = await PlayerService.generateCarnet(data.id, token, false);
+    setCustomLoading(false);
+    return file;
+  }
 
   return {
     data,
@@ -37,6 +50,8 @@ const useGetPlayer = (id: string | number) => {
     error: isError,
     updateActive: updateActiveMutation.mutateAsync,
     destory: deleteMutation.mutateAsync,
+    sendCarnet,
+    carnetLoading: customLoading,
   }
 }
 

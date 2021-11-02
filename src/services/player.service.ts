@@ -105,6 +105,18 @@ class PlayerService{
     });
   }
 
+  static async generateCarnet(id: number, token: string | null, sendEmail: boolean = false) {
+    const { data } = await axios.get<Blob>(`${config.api}/players/${id}/carnet`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      params: {
+        send: sendEmail ? 1 : 0,
+      },
+      responseType: 'blob',
+    });
+    return data;
+  }
 
   private static async getBlob(imageSrc: string): Promise<Blob> {
     const { data: file } = await axios.get<Blob>(imageSrc, {

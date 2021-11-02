@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
-import { Button, ErrorPage, Input, Modal, PlayerInfoCard } from '../../components';
+import { Button, ErrorPage, Input, LoadingOverlay, Modal, PlayerInfoCard } from '../../components';
 import { useGetPlayer } from '../../hooks';
 
 type PlayerDetailsParams = {
@@ -18,8 +18,10 @@ const PlayerDetails: React.FC = () => {
     data, 
     loading, 
     error,
+    carnetLoading,
     updateActive,
     destory,
+    sendCarnet,
   } = useGetPlayer(id);
 
   const handleEdit = (playerId: number) => {
@@ -36,6 +38,18 @@ const PlayerDetails: React.FC = () => {
   const handleDestroy = async () => {
     await destory();
     history.push('/players');
+  }
+
+  const handleSendCarnet = async () => {
+    const res = await sendCarnet();
+    const carnetUrl = URL.createObjectURL(res);
+    const link = document.createElement('a');
+    link.href = carnetUrl;
+    link.download = 'carnet.jpeg'; 
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   if (loading) {
@@ -57,6 +71,7 @@ const PlayerDetails: React.FC = () => {
 
   return(
     <div className="max-w-3xl mx-auto">
+      <LoadingOverlay loading={carnetLoading} message="Generando carnet del jugador..." />
       <Modal
         title="Eliminar jugador!"
         open={modalOpen}
@@ -82,7 +97,7 @@ const PlayerDetails: React.FC = () => {
         onChangeActive={(_, active) => handleUpdateActive(active)}
         onEdit={handleEdit}
         onDelete={() => setModalOpen(true)}
-        onSendCarnet={() => console.log('Enviando carnet a jugador...')}
+        onSendCarnet={handleSendCarnet}
         player={data} 
       />
     </div>
