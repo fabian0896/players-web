@@ -39,7 +39,7 @@ const useGetPlayer = (id: string | number) => {
       setCustomLoading(false);
       throw new Error('No user found');
     }
-    const file = await PlayerService.generateCarnet(data.id, token, false);
+    const file = await PlayerService.generateCarnet(data.id, token, true);
     setCustomLoading(false);
     return file;
   }
