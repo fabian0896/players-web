@@ -31,7 +31,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     setLoading(true);
     try {
       const data = await AuthService.login(values);
-      console.log(data);
+      // console.log(data);
       setUser(data.user);
       setToken(data.token);
       AuthService.setRefreshTimeout(data, (error: any, refreshData: any) => {

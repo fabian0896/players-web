@@ -22,7 +22,7 @@ class AuthService {
   }
 
   static setRefreshTimeout({ expireIn }: LoginResponse, callback: any) {
-    console.log('se puso el timer a ', expireIn);
+    // console.log('se puso el timer a ', expireIn);
     this.timerRef = setTimeout(async () => {
       try {
         const data = await this.refresh();
