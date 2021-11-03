@@ -72,6 +72,16 @@ class AuthService {
     });
     return response;
   }
+
+  static async startReset(email: string) {
+    const { data } = await axios.post(`${config.api}/auth/start-reset`, { email });
+    return data;
+  }
+
+  static async reset(token: string | null, password: string) {
+    const { data } = await axios.post(`${config.api}/auth/reset`, { token, password });
+    return data;
+  }
 }
 
 export default AuthService;

@@ -73,7 +73,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
               No recuerdas tu contraseña? 🤦‍♂️ {' '}
               <Link 
                 className="text-red-500 font-semibold underline"
-                to="/home"
+                to="/start-reset"
               >
                 recuperala aqui
               </Link>

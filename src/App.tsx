@@ -7,7 +7,9 @@ import {
   NewPlayer,
   EditPlayer,
   PlayerDetails,
-  Users
+  Users,
+  StartResetPassword,
+  ResetPassword,
 } from './pages';
 
 import { PrivateRoute } from './components';
@@ -25,6 +27,8 @@ function App() {
           <PrivateRoute path="/users" component={Users} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/start-reset" component={StartResetPassword} />
+          <Route path="/reset" component={ResetPassword} />
           <Redirect to="/" />
         </Switch>
       </BrowserRouter>
