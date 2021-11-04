@@ -25,7 +25,7 @@ const PlayerDetails: React.FC = () => {
   } = useGetPlayer(id);
 
   const handleEdit = (playerId: number) => {
-    history.push({
+    history.replace({
       pathname: `/players/edit/${playerId}`,
       state: { from: location },
     });

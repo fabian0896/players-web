@@ -11,13 +11,18 @@ class PlayerService{
     this.playerData = playerData;
   }
 
-  static async getAll(token: string | null, cursor?: number) {
+  static async getAll(token: string | null, cursor?: number, query?: string) {
+    if (!query) {
+      query = undefined;
+    }
     const { data } = await axios.get<PlayerResponse>(`${config.api}/players`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
       params: {
         cursor,
+        query,
+        size: 15
       }
     });
     return data;

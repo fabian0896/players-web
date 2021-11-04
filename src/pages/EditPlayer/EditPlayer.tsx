@@ -31,7 +31,7 @@ const EditPlayer: React.FC = () => {
         await PlayerService.update(Number(id), values, token);
       }
       const { from } = location.state || { from: { pathname: '/players' } };
-      history.push(from);
+      history.replace(from);
     } catch (error) {
       throw new Error('Algo salio mal al actualizar el jugador 😢');
     }

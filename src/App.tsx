@@ -19,12 +19,12 @@ function App() {
     <div>
       <BrowserRouter>
         <Switch>
-          <PrivateRoute path="/" exact component={Home} />
-          <PrivateRoute path="/players/edit/:id" component={EditPlayer} />
-          <PrivateRoute path="/players/new" component={NewPlayer} />
-          <PrivateRoute path="/players/:id" component={PlayerDetails} />
-          <PrivateRoute path="/players" component={Players} />
-          <PrivateRoute path="/users" component={Users} />
+          <PrivateRoute title="Inicio" path="/" exact component={Home} />
+          <PrivateRoute title="Editar Jugador" path="/players/edit/:id" component={EditPlayer} />
+          <PrivateRoute title="Crear Jugador" path="/players/new" component={NewPlayer} />
+          <PrivateRoute title="Detalles de Jugador" path="/players/:id" component={PlayerDetails} />
+          <PrivateRoute title="Jugadores" path="/players" component={Players} />
+          <PrivateRoute title="Usuarios" path="/users" component={Users} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/start-reset" component={StartResetPassword} />

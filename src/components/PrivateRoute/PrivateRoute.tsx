@@ -5,9 +5,10 @@ import { Layout } from '..'
 
 interface PrivateLayoutProps extends RouteProps {
   layout?: React.FC
+  title: string
 }
 
-const PrivateRoute: React.FC<PrivateLayoutProps> = ({ layout: CustomLayout ,component: Component, ...rest }) => {
+const PrivateRoute: React.FC<PrivateLayoutProps> = ({ layout: CustomLayout ,component: Component, title, ...rest }) => {
   const { user, loading } = useAuth();
 
   let RederLayout = Layout;
@@ -28,7 +29,7 @@ const PrivateRoute: React.FC<PrivateLayoutProps> = ({ layout: CustomLayout ,comp
     <Route
       {...rest}
       render={({ location, ...props }) => user ? (
-        <RederLayout>
+        <RederLayout title={title}>
           <Component {...props} location={location} />
         </RederLayout>
       ) : (

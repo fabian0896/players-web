@@ -1,4 +1,6 @@
 import React from "react";
+import { IoArrowBack } from 'react-icons/io5';
+
 import { useAuth } from "../../context/auth";
 import { useHistory } from 'react-router-dom';
 import { FaUserPlus } from 'react-icons/fa';
@@ -7,25 +9,36 @@ import { ButtonCore } from "..";
 
 import './Layout.css';
 
-const Layout: React.FC = ({ children }) => {
+interface LayoutProps {
+  title: string
+}
+
+const Layout: React.FC<LayoutProps> = ({ children, title }) => {
   const { user, logout } = useAuth();
   const history = useHistory();
 
   const handleLogout = async () => {
     await logout();
-  }
+  };
 
   const handleCreatePlayer = () => {
     history.push('/players/new');
-  }
+  };
+
+  const handleGoBack = () => {
+    history.goBack();
+  };
 
   return(
     <div className="flex">
       <SideBar user={user} onLogout={handleLogout} />
       <div className="flex-1 flex flex-col h-screen">
         <div className="h-20 w-full shadow flex items-center px-5 py-2 justify-between bg-red-500">
-          <div>
-            <h2 className="text-3xl text-white">Inicio</h2>
+          <div className="flex space-x-5 items-center">
+            <button onClick={handleGoBack} className="p-2 rounded-full hover:bg-black hover:bg-opacity-20 transition">
+              <IoArrowBack size={30} className="text-white" />
+            </button>
+            <h2 className="text-3xl text-white font-bold">{title}</h2>
           </div>
           <div>
             <ButtonCore
