@@ -9,10 +9,11 @@ import basketballSvg from '../../assets/svg/basketball.svg';
 import { Link } from "react-router-dom";
 
 interface PLayerItemProps {
-  player: PlayerData
+  player: PlayerData,
+  showEdit: boolean,
 }
 
-const PLayerItem: React.FC<PLayerItemProps> = ({ player }) => {
+const PLayerItem: React.FC<PLayerItemProps> = ({ player, showEdit }) => {
 
   const age = useMemo(() => differenceInYears(new Date(), new Date(player.birthday)), [player.birthday]);
 
@@ -22,13 +23,14 @@ const PLayerItem: React.FC<PLayerItemProps> = ({ player }) => {
         <span className={`text-xs p-1 ${player.active ? 'bg-green-400' : 'bg-red-500'} rounded text-white font-semibold`}>
           {player.active ? 'Activo' : 'Inactivo'}
         </span>
-        <Link
-          to={`/players/edit/${player.id}`}
-          className="bg-gray-300 p-1.5 rounded-full transition transform hover:scale-105"
-        >
-          <FaRegEdit className="text-gray-700"/>
-        </Link>
-
+        {showEdit && (
+          <Link
+            to={`/players/edit/${player.id}`}
+            className="bg-gray-300 p-1.5 rounded-full transition transform hover:scale-105"
+          >
+            <FaRegEdit className="text-gray-700"/>
+          </Link>
+        )}
       </div>
       <div className="flex justify-center w-full p-5 pt-0">
         <div className="w-20 h-20 bg-gray-50 rounded-lg ring-2 ring-offset-2 ring-red-500 overflow-hidden">

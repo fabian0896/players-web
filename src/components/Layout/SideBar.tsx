@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { FaHome, FaBasketballBall, FaUsers, FaSignOutAlt } from 'react-icons/fa';
 import { User } from "../../react-app-env";
 
-import { startCase } from '../../utils';
+import { roleVerify, startCase } from '../../utils';
 import config from "../../config";
 
 interface SideBarProps {
@@ -44,15 +44,17 @@ const SideBar: React.FC<SideBarProps> = ({ onLogout, user }) => {
               <span>Jugadores</span>
           </NavLink>
         </li>
-        <li className="text-red-800">
-          <NavLink
-            activeClassName="bg-red-500 rounded text-white"
-            className="p-2 px-5 flex items-center font-semibold space-x-4 text-xl transition"
-            to="/users">
-              <FaUsers className="text-2xl" />
-              <span>Usuarios</span>
-          </NavLink>
-        </li>
+        {roleVerify(user, ['admin']) && (
+          <li className="text-red-800">
+            <NavLink
+              activeClassName="bg-red-500 rounded text-white"
+              className="p-2 px-5 flex items-center font-semibold space-x-4 text-xl transition"
+              to="/users">
+                <FaUsers className="text-2xl" />
+                <span>Usuarios</span>
+            </NavLink>
+          </li>
+        )}
       </ul>
     </div>
     <div className="flex-1"></div>

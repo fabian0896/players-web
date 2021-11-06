@@ -17,7 +17,7 @@ const roles: Array<{ name: string, value: Role }> = [
 
 const config = {
   api: 'http://localhost:4000/api/v1',
-  roles
+  roles,
 };
 
 export default config;

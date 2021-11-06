@@ -8,6 +8,7 @@ import SideBar from "./SideBar";
 import { ButtonCore } from "..";
 
 import './Layout.css';
+import { roleVerify } from "../../utils";
 
 interface LayoutProps {
   title: string
@@ -35,19 +36,23 @@ const Layout: React.FC<LayoutProps> = ({ children, title }) => {
       <div className="flex-1 flex flex-col h-screen">
         <div className="h-20 w-full shadow flex items-center px-5 py-2 justify-between bg-red-500">
           <div className="flex space-x-5 items-center">
-            <button onClick={handleGoBack} className="p-2 rounded-full hover:bg-black hover:bg-opacity-20 transition">
-              <IoArrowBack size={30} className="text-white" />
-            </button>
+            {(history.length > 1) && (
+              <button onClick={handleGoBack} className="p-2 rounded-full hover:bg-black hover:bg-opacity-20 transition">
+                <IoArrowBack size={30} className="text-white" />
+              </button>
+            )}
             <h2 className="text-3xl text-white font-bold">{title}</h2>
           </div>
-          <div>
-            <ButtonCore
-              className="bg-white text-red-500 focus:ring-white hover:bg-gray-200"
-              onClick={handleCreatePlayer} 
-              icon={FaUserPlus}>
-                Crear jugador
-            </ButtonCore>
-          </div>
+          {roleVerify(user, ['admin', 'editor']) && (
+            <div>
+              <ButtonCore
+                className="bg-white text-red-500 focus:ring-white hover:bg-gray-200"
+                onClick={handleCreatePlayer} 
+                icon={FaUserPlus}>
+                  Crear jugador
+              </ButtonCore>
+            </div>
+          )}
         </div>
         <div id="layout-container" className="p-5 flex-1 overflow-y-auto relative bg-gray-100">
           <div className="custom-shape-divider-top-1635354077">

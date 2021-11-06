@@ -4,14 +4,15 @@ import { PlayerData } from "../../react-app-env";
 import PLayerItem from "./PlayerItem";
 
 interface PlayersListProps {
-  players: PlayerData[]
+  players: PlayerData[],
+  showEdit: boolean
 }
 
-const PlayersList: React.FC<PlayersListProps> = ({ players }) => {
+const PlayersList: React.FC<PlayersListProps> = ({ players, showEdit }) => {
   return(
     <div className="grid grid-cols-3 gap-8">
       {players.map((player) => (
-        <PLayerItem key={player.id} player={player} />
+        <PLayerItem showEdit={showEdit} key={player.id} player={player} />
       ))}
     </div>
   );
