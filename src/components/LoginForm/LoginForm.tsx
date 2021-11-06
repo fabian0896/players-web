@@ -37,9 +37,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
             alt="nba-logo" 
           />
         </div>
-        <Message show={error}>
-          Usuario o contraseña incorrectos. Intenta nuevamente
-        </Message>
+        <div className="p-4">
+          <Message show={error}>
+            Usuario o contraseña incorrectos. Intenta nuevamente
+          </Message>
+        </div>
         <form onSubmit={formik.handleSubmit} className="p-4 space-y-8">
           <Input
             value={formik.values.email}
